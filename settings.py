@@ -26,7 +26,12 @@ not_active_message = "I'm not sending reminders to drink water in this channel."
 # Message to send when a user doesn't have permission to activate the bot:
 no_permission_message = "You don't have permission to give this bot instructions"
 
+command_not_found = "Command not found. Type `@Hydr8 help` to see all commands."
+
 description = "A simple bot that reminds you to drink water"
+
+# Playing [with water]
+bot_status = "with water"
 
 # The token for the bot (check the readme for more info on where to get this):  # TODO: Add link
 token = ""

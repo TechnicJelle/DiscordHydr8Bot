@@ -2,12 +2,13 @@ import atexit
 import csv
 import os
 
+import discord
 from discord.ext import commands, tasks
 from discord.ext.commands import has_permissions, MissingPermissions
 
 import settings
 
-channels_file = "channels.csv"
+channels_file = "channels.csv"  # Not really meant to be changed, but it's nicer to have a variable for it, instead of hard-coding it
 
 class Reminder(commands.Cog):
 
@@ -22,11 +23,12 @@ class Reminder(commands.Cog):
 		self.load_channels()
 		self.remind.start()
 		self.interval_save.start()
+		await self.client.change_presence(activity=discord.Game(settings.bot_status))
 
 	@commands.Cog.listener()
 	async def on_command_error(self, ctx, error):
 		if isinstance(error, commands.CommandNotFound):
-			await ctx.send("Command not found")
+			await ctx.send(settings.command_not_found)
 
 	### COMMANDS ###
 	@commands.command(settings.activation_command, brief=settings.activation_brief_description, description=settings.activation_description)
