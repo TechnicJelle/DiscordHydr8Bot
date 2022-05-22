@@ -8,7 +8,7 @@ class Reminder(commands.Cog):
 
 	@commands.Cog.listener()
 	async def on_ready(self):
-		print("Reminder is ready.")
+		print("Reminder is ready!")
 		self.remind.start()
 
 	@commands.command(settings.activation_command)
@@ -20,7 +20,6 @@ class Reminder(commands.Cog):
 				await ctx.send(settings.already_activated_message)
 			else:  # activate
 				self.channels.append(ctx.channel.id)
-				print(self.channels)
 				await ctx.send(settings.activation_message)
 
 	@commands.command(settings.stop_command)
@@ -30,13 +29,15 @@ class Reminder(commands.Cog):
 		else:  # yes permission
 			if ctx.channel.id in self.channels:  # deactivate
 				self.channels.remove(ctx.channel.id)
-				print(self.channels)
 				await ctx.send(settings.stop_message)
 			else:  # not active
 				await ctx.send(settings.not_active_message)
 
-	@tasks.loop(seconds=10)
+	@tasks.loop(minutes=settings.reminder_time_in_minutes)
 	async def remind(self):
-		print(self.channels)
 		for channel in self.channels:
 			await self.client.get_channel(channel).send(settings.reminder_message)
+
+def setup(bot):
+	bot.add_cog(Reminder(bot))
+	print("Reminder is loading...")
