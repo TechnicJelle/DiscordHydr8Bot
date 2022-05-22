@@ -3,6 +3,7 @@ import csv
 import os
 
 from discord.ext import commands, tasks
+from discord.ext.commands import has_permissions, MissingPermissions
 
 import settings
 
@@ -15,9 +16,6 @@ class Reminder(commands.Cog):
 		self.channels = []
 		atexit.register(self.save_channels)
 
-	def get_channels(self):
-		return self.channels
-
 	@commands.Cog.listener()
 	async def on_ready(self):
 		print("[Reminder Module] Ready!")
@@ -25,33 +23,40 @@ class Reminder(commands.Cog):
 		self.remind.start()
 		self.interval_save.start()
 
+	@commands.Cog.listener()
+	async def on_command_error(self, ctx, error):
+		if isinstance(error, commands.CommandNotFound):
+			await ctx.send("Command not found")
+
 	### COMMANDS ###
 	@commands.command(settings.activation_command, brief=settings.activation_brief_description, description=settings.activation_description)
+	@has_permissions(mention_everyone=True)
 	async def here(self, ctx : commands.Context):
-		if not ctx.author.guild_permissions.administrator:  # no permission
-			await ctx.send(settings.no_permission_message)
-		else:  # yes permission
-			if ctx.channel.id in self.channels:  # already activated
-				await ctx.send(settings.already_activated_message)
-			else:  # activate
-				self.channels.append(ctx.channel.id)
-				await ctx.send(settings.activation_message)
+		if ctx.channel.id in self.channels:  # already activated
+			await ctx.send(settings.already_activated_message)
+		else:  # activate
+			self.channels.append(ctx.channel.id)
+			await ctx.send(settings.activation_message)
 
 	@commands.command(settings.stop_command, brief=settings.stop_brief_description, description=settings.stop_description)
+	@has_permissions(mention_everyone=True)
 	async def stop(self, ctx : commands.Context):
-		if not ctx.author.guild_permissions.administrator:  # no permission
-			await ctx.send(settings.no_permission_message)
-		else:  # yes permission
-			if ctx.channel.id in self.channels:  # deactivate
-				self.channels.remove(ctx.channel.id)
-				await ctx.send(settings.stop_message)
-			else:  # not active
-				await ctx.send(settings.not_active_message)
+		if ctx.channel.id in self.channels:  # deactivate
+			self.channels.remove(ctx.channel.id)
+			await ctx.send(settings.stop_message)
+		else:  # not active
+			await ctx.send(settings.not_active_message)
 
 	@tasks.loop(minutes=settings.reminder_time_in_minutes)
 	async def remind(self):
 		for channel in self.channels:
 			await self.client.get_channel(channel).send(settings.reminder_message)
+
+	@here.error
+	@stop.error
+	async def no_permission_error(self, ctx, error):
+		if isinstance(error, MissingPermissions):
+			await ctx.send(settings.no_permission_message)
 
 	### DATA HANDLING ###
 	@tasks.loop(minutes=10)
