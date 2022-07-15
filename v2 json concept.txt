@@ -1,0 +1,28 @@
+channels:
+	123231
+	213944:
+		template: nl
+	293719:
+		template: kad8-onc89-dsab-19bjcbak
+	123971:
+		overrides:
+			hydrate now: "oi mate drink water"
+	231273:
+		template: nl
+		overrides:
+			hydrate now: "oi makker ga water drinken"
+		
+
+templates:
+	default:
+		hydrate now: "@here, don't forget to drink water!"
+		start: "I'll send reminders to drink water in this channel from now on!"
+		end: "I'll stop sending reminders to drink water in this channel."
+	nl:
+		hydrate now: "@here, vergeet niet water te drinken!"
+		start: "ik ga vanaf nu jullie helpen herinneren water te drinken"
+		end: "ik houd mn snater"
+	kad8-onc89-dsab-19bjcbak:
+		hydrate now: "hydr8 or die str8"
+		start: "eyo imma start botherin y'alls"
+		end: "aight i'll shut up"

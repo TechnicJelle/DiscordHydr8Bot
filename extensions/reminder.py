@@ -8,8 +8,6 @@ from discord.ext.commands import has_permissions, MissingPermissions
 
 import settings
 
-channels_file = "channels.csv"  # Not really meant to be changed, but it's nicer to have a variable for it, instead of hard-coding it
-
 class Reminder(commands.Cog):
 
 	def __init__(self, client):
@@ -31,16 +29,16 @@ class Reminder(commands.Cog):
 			await ctx.send(settings.command_not_found)
 
 	### COMMANDS ###
-	@commands.command(settings.activation_command, brief=settings.activation_brief_description, description=settings.activation_description)
+	@commands.command(settings.cmd_start, brief=settings.activation_brief_description, description=settings.activation_description)
 	@has_permissions(mention_everyone=True)
-	async def here(self, ctx : commands.Context):
+	async def start(self, ctx : commands.Context):
 		if ctx.channel.id in self.channels:  # already activated
 			await ctx.send(settings.already_activated_message)
 		else:  # activate
 			self.channels.append(ctx.channel.id)
 			await ctx.send(settings.activation_message)
 
-	@commands.command(settings.stop_command, brief=settings.stop_brief_description, description=settings.stop_description)
+	@commands.command(settings.cmd_stop, brief=settings.stop_brief_description, description=settings.stop_description)
 	@has_permissions(mention_everyone=True)
 	async def stop(self, ctx : commands.Context):
 		if ctx.channel.id in self.channels:  # deactivate
@@ -54,7 +52,7 @@ class Reminder(commands.Cog):
 		for channel in self.channels:
 			await self.client.get_channel(channel).send(settings.reminder_message)
 
-	@here.error
+	@start.error
 	@stop.error
 	async def no_permission_error(self, ctx, error):
 		if isinstance(error, MissingPermissions):

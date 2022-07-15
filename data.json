@@ -1,0 +1,40 @@
+{
+	"channels": {
+		"858701175251795972": {},
+		"858701175251795973": {
+			"template": "nl"
+		}
+	},
+	"templates": {
+		"default": {
+			"bot_description": "A simple bot that reminds you to drink water",
+			"reminder_message": "@here, don't forget to drink water!",
+			"reminder_time_in_minutes": 60,
+			"command_not_found": "Command not found. Type `@Hydr8 help` to see all commands.",
+			"no_permission_message": "You don't have permission to give this bot instructions",
+			"cmd_activate_desc_brief": "Activate the reminder in this channel",
+			"cmd_activate_desc_full": "Activate a reminder in this channel to drink water every once in a while",
+			"cmd_activate_msg": "I'll send reminders to drink water in this channel from now on!",
+			"amd_active_msg_already": "I'm already sending reminders to drink water in this channel",
+			"cmd_stop_desc_brief": "Stop reminding me to drink water in this channel",
+			"cmd_stop_desc_full": "Stop reminding me to drink water in this channel",
+			"cmd_stop_msg": "I'll stop sending reminders to drink water in this channel.",
+			"cmd_stop_msg_not-active": "I'm already not sending reminders to drink water in this channel"
+		},
+		"nl": {
+			"bot_description": "Een simpele bot die je herinnert om water te drinken",
+			"reminder_message": "@here, vergeet niet om water te drinken!",
+			"reminder_time_in_minutes": 60,
+			"command_not_found": "Commando niet gevonden. Type `@Hydr8 help` om alle commando's te zien.",
+			"no_permission_message": "Je hebt geen toestemming om deze bot instructies te geven",
+			"cmd_activate_desc_brief": "Activeer de herinnering in dit kanaal",
+			"cmd_activate_desc_full": "Activeer een herinnering in dit kanaal om water te drinken zo nu en dan",
+			"cmd_activate_msg": "Ik zal herinneringen sturen om water te drinken in dit kanaal vanaf nu!",
+			"amd_active_msg_already": "Ik stuur al herinneringen om water te drinken in dit kanaal",
+			"cmd_stop_desc_brief": "Stop met herinneringen om water te drinken in dit kanaal",
+			"cmd_stop_desc_full": "Stop met herinneringen om water te drinken in dit kanaal",
+			"cmd_stop_msg": "Ik zal geen herinneringen meer sturen om water te drinken in dit kanaal.",
+			"cmd_stop_msg_not-active": "Ik stuur al geen herinneringen om water te drinken in dit kanaal"
+		}
+	}
+}
