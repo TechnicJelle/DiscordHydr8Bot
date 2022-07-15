@@ -31,7 +31,7 @@ def getTemplate(channelID : int) -> str:
 	else:
 		raise Exception("Channel not found in data")
 
-print(getTemplate(6982369))
+# print(getTemplate(6982369))
 print(getTemplate(858701175251795973))
 
 # default_prefixes = ['Hydr8', 'hydr8']
@@ -49,5 +49,9 @@ print(getTemplate(858701175251795973))
 # 		except Exception as e:
 # 			print(	f"""Failed to load extension with a {type(e).__name__}
 # 					\n{e}""")
-#
-# client.run(settings.token)
+
+
+# open token file
+with open("token", mode='r') as infile:
+	token : str = infile.read()
+	# client.run(token)
